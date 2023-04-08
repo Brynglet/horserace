@@ -27,14 +27,16 @@ public class HarryKartServiceImpl implements HarryKartService {
 
         var harryKartType = XmlConverter.transformXmlToJava(xmlStr);
 
-        List<HorseDTO> horseDTOs = harryKartType.getStartList().getParticipant()
+        List<HorseDTO> topFinishers = harryKartType.getStartList().getParticipant()
                 .stream()
                 .map(participantType -> getHorseDto(participantType, harryKartType))
                 .sorted((horseDTO1, horseDTO2) -> horseDTO1.getTotalTime() > horseDTO2.getTotalTime() ? 1 : -1)
                 .limit(NR_OF_MEDAL_FINISHERS)
                 .collect(Collectors.toList());
 
-        return convertToResponse(horseDTOs);
+        var response = convertToResponse(topFinishers);
+
+        return response;
     }
 
     private HorseDTO getHorseDto(ParticipantType participantType, HarryKartType hkt) {
@@ -88,7 +90,6 @@ public class HarryKartServiceImpl implements HarryKartService {
 
         List<PositionHorse> responseInfo = horseDTOs
                 .stream()
-                .sorted((horseDTO1, horseDTO2) -> horseDTO1.getTotalTime() > horseDTO2.getTotalTime() ? 1 : -1)
                 .map(horseDTO -> PositionHorse.builder()
                         .horse(horseDTO.getHorseName())
                         .position(pos.incrementAndGet())
