@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="2" failures="0" name="se.service.harrykart.java.rest.service.HarryKartServiceImplTest" time="0.256" errors="0" skipped="0">
+<testsuite tests="2" failures="0" name="se.service.harrykart.java.rest.service.HarryKartServiceImplTest" time="0.191" errors="0" skipped="0">
   <properties>
     <property name="idea.version" value="2023.1"/>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
@@ -66,6 +66,6 @@
     <property name="sun.stdout.encoding" value="UTF-8"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="se.service.harrykart.java.rest.service.HarryKartServiceImplTest" name="verifyBadSpeedThrowsException" time="0.231"/>
-  <testcase classname="se.service.harrykart.java.rest.service.HarryKartServiceImplTest" name="verifyCalculationsOK" time="0.025"/>
+  <testcase classname="se.service.harrykart.java.rest.service.HarryKartServiceImplTest" name="verifyBadSpeedThrowsException" time="0.179"/>
+  <testcase classname="se.service.harrykart.java.rest.service.HarryKartServiceImplTest" name="verifyCalculationsOK" time="0.012"/>
 </testsuite>

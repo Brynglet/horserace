@@ -23,13 +23,14 @@ import static se.service.harrykart.java.rest.utility.CommonConstants.*;
 public class HarryKartServiceImpl implements HarryKartService {
 
     @Override
-    public HarryResponse getResponse(String xmlStr) {
+    public HarryResponse getTopFinishers(String xmlStr) {
 
         var harryKartType = XmlConverter.transformXmlToJava(xmlStr);
 
-        List<HorseDTO> horseDTOs = harryKartType.getStartList().getParticipant().stream()
-                .map(x -> getHorseDto(x, harryKartType))
-                .sorted((x1, x2) -> x1.getTotalTime() > x2.getTotalTime() ? 1 : -1)
+        List<HorseDTO> horseDTOs = harryKartType.getStartList().getParticipant()
+                .stream()
+                .map(participantType -> getHorseDto(participantType, harryKartType))
+                .sorted((horseDTO1, horseDTO2) -> horseDTO1.getTotalTime() > horseDTO2.getTotalTime() ? 1 : -1)
                 .limit(NR_OF_MEDAL_FINISHERS)
                 .collect(Collectors.toList());
 
@@ -49,10 +50,12 @@ public class HarryKartServiceImpl implements HarryKartService {
 
     private Double getTotalRaceTime(ParticipantType participantType, HarryKartType hkt) {
 
-        List<BigInteger> bumpUps = hkt.getPowerUps().getLoop().stream()
-                .sorted((x1, x2) -> x1.getNumber().intValue() > x2.getNumber().intValue() ? 1 : -1)
-                .flatMap(x -> x.getLane().stream())
-                .filter(x -> participantType.getLane().intValue() == x.getNumber().intValue())
+        List<BigInteger> bumpUps = hkt.getPowerUps().getLoop()
+                .stream()
+                .sorted((loopType1, loopType2) ->
+                        loopType1.getNumber().intValue() > loopType2.getNumber().intValue() ? 1 : -1)
+                .flatMap(loopType -> loopType.getLane().stream())
+                .filter(laneType -> participantType.getLane().intValue() == laneType.getNumber().intValue())
                 .map(LaneType::getValue)
                 .collect(Collectors.toList());
 
@@ -83,12 +86,13 @@ public class HarryKartServiceImpl implements HarryKartService {
 
         AtomicInteger pos = new AtomicInteger();
 
-        List<PositionHorse> responseInfo = horseDTOs.stream()
-                .sorted((x1, x2) -> x1.getTotalTime() > x2.getTotalTime() ? 1 : -1)
-                .map(x -> PositionHorse.builder()
-                        .horse(x.getHorseName())
+        List<PositionHorse> responseInfo = horseDTOs
+                .stream()
+                .sorted((horseDTO1, horseDTO2) -> horseDTO1.getTotalTime() > horseDTO2.getTotalTime() ? 1 : -1)
+                .map(horseDTO -> PositionHorse.builder()
+                        .horse(horseDTO.getHorseName())
                         .position(pos.incrementAndGet())
-                        .totalTime(x.getTotalTime())
+                        .totalTime(horseDTO.getTotalTime())
                         .build())
                 .collect(Collectors.toList());
 

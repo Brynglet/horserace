@@ -24,7 +24,7 @@ public class HarryKartController {
     @PostMapping(path = "/play", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MappingJacksonValue> playHarryKart(@RequestBody String xmlStr) {
 
-        var harryResp = harryKartService.getResponse(xmlStr);
+        var harryResp = harryKartService.getTopFinishers(xmlStr);
 
         return ResponseEntity.ok(new MappingJacksonValue(harryResp));
     }

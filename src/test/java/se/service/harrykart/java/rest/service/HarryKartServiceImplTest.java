@@ -115,8 +115,7 @@ public class HarryKartServiceImplTest {
     @Test
     public void verifyCalculationsOK() {
 
-        HarryResponse actual = harryKartServiceImpl
-                .getResponse(inputXMLOk);
+        HarryResponse actual = harryKartServiceImpl.getTopFinishers(inputXMLOk);
 
         assertEquals(NR_OF_MEDAL_FINISHERS, actual.getRanking().size());
 
@@ -140,8 +139,7 @@ public class HarryKartServiceImplTest {
     @Test(expected = Exception.class)
     public void verifyBadSpeedThrowsException() {
         try {
-            harryKartServiceImpl
-                    .getResponse(inputXMLBadSpeed);
+            harryKartServiceImpl.getTopFinishers(inputXMLBadSpeed);
         } catch (RuntimeException e) {
             assertEquals("getLapSpeed exception lapSpeed <= 0 :0.0", e.getMessage());
             throw e;
