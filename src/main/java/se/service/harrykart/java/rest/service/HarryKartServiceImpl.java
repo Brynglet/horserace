@@ -34,9 +34,7 @@ public class HarryKartServiceImpl implements HarryKartService {
                 .limit(NR_OF_MEDAL_FINISHERS)
                 .collect(Collectors.toList());
 
-        var response = convertToResponse(topFinishers);
-
-        return response;
+        return convertToResponse(topFinishers);
     }
 
     private HorseDTO getHorseDto(ParticipantType participantType, HarryKartType hkt) {
